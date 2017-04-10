@@ -25,10 +25,12 @@ for f in os.listdir(path):
                     # print("subsubdir->", end="")
                     # print(f4)
                     f5 = os.path.join(f3, f4)
-                    if f5.endswith(".flac"):
-                        f6 = f5.replace("flac","wav")
+                    if f5.endswith(".wav"):
+                        f6 = f5.replace("wav","txt")
+                        f7 = f5.replace(".wav", "-op.txt")
+                        pgmname = "/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing/p2fa/align.py"
                         # print(f6)
-                        args = "ffmpeg -i " + f5 + " " + f6
+                        args = "python " + pgmname + " " + f5 + " " + f6 +" " + f7
                         # print(args)
                         subprocess.call(args, shell=True)
             # print("------------")

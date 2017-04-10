@@ -2,8 +2,10 @@ import os
 import subprocess
 
 path = "/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing/speech-dev"
+txt_path = "/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing/speech-dev/bag-of-words.txt"
 
 print("Start")
+writer = open(txt_path, "w")
 for f in os.listdir(path):
     if f != ".DS_Store":
         f1 = os.path.join(path, f)
@@ -29,15 +31,15 @@ for f in os.listdir(path):
                             for lines in trans_txt:
                                 text = lines.split(" ")
                                 print(text[0],end="->")
-                                fileName = os.path.join(f3, text[0]+".txt")
+                                # fileName = os.path.join(f3, text[0]+".txt")
                                 # print(fileName)
-                                s = " sp ".join(text[1:])
-                                with open(fileName, "w") as writer:
-                                    writer.write(s)
+                                s = " ".join(text[1:])
+                                writer.write(s)
                     # if f5.endswith(".flac"):
                     #     f6 = f5.replace("flac","wav")
                     #     args = "ffmpeg -i " + f5 + " " + f6
                     #     # print(args)
                     #     subprocess.call(args, shell=True)
             # print("------------")
+writer.close()
 print("finished")

@@ -1,10 +1,25 @@
 Read 76 physical / 76 logical HMMs
 Label file will be used to align each file
 Aligning File: ./tmp/tmp.plp
-Created lattice with 9 nodes / 8 arcs from label file
+Created lattice with 39 nodes / 38 arcs from label file
  WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
  WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
  WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
  WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
  WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
-sp GO sp DO sp YOU sp HEAR sp  ==  [207 frames] 8.9849 [Ac=1859.9 LM=0.0] (Act=22.5)
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+ WARNING [-8232]  ExpandWordNet: Pronunciation 1 of sp is 'tee' word in HVite
+sp THOU sp LIKE sp ARCTURUS sp STEADFAST sp IN sp THE sp SKIES sp WITH sp TARDY sp SENSE sp THY sp KINGDOM sp FAIR sp BEARING sp ALONE sp THE sp LOAD sp OF sp LIBERTY sp  ==  [886 frames] 19.2614 [Ac=17065.6 LM=0.0] (Act=147.8)
