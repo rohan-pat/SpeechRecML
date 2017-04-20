@@ -25,15 +25,21 @@ for f in os.listdir(path):
                 for f4 in os.listdir(f3):
                     if f4.endswith(".trans.txt"):
                         # print("subsubdir->", end="")
-                        print(f4)
+                        # print(f4)
                         f5 = os.path.join(f3, f4)
                         with open(f5, "r") as trans_txt:
                             for lines in trans_txt:
                                 text = lines.split(" ")
-                                print(text[0],end="->")
+                                # print(text[0],end="->")
                                 # fileName = os.path.join(f3, text[0]+".txt")
                                 # print(fileName)
+                                # if "\n" in text[1:]:
+                                text[0] = "<s>"
+                                text[len(text) - 1] = text[len(text) - 1].strip()
+                                text.append("</s> ")
+                                # print(text[len(text) - 1])
                                 s = " ".join(text[1:])
+                                # s = s.strip()
                                 writer.write(s)
                     # if f5.endswith(".flac"):
                     #     f6 = f5.replace("flac","wav")
