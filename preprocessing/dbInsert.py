@@ -16,13 +16,14 @@ class DBOperation:
         data = self.db.inputFeatures.find()[num]
         return data['keyId'], data['text'], data['featureArr']
 
-    def matrixToList(self, weightMatrix):
+    def storeWeightMatrix(self, weightMatrix):
         weightList = weightMatrix.tolist()
         data = {}
         data['weightList'] = weightList
+        self.db.weights.remove({})
         self.db.weights.insert_one(data)
 
-    def listToMatrix(self):
+    def getWeightMatrix(self):
         data = self.db.weights.find()[0]
         print(data['weightList'])
         weightMatrix = np.matrix(data['weightList'])

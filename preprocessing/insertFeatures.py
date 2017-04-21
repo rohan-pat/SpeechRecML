@@ -5,6 +5,7 @@ import subprocess
 from dbInsert import DBOperation
 import scipy.io.wavfile
 import librosa
+import numpy as np
 # from scikits.talkbox.features import mfcc
 
 path = "/Users/Push/Documents/SpeechRecML/preprocessing/speech-dev"
