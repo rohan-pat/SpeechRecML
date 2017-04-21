@@ -8,6 +8,14 @@ class DBOperation:
         self.db = self.client.test #client['test']
         self.coll = self.db['speechRec'] #db.speechRec
 
+    def getCount(self):
+        count = self.db.inputFeatures.count()
+        return count
+
+    def getFeatures(self, num):
+        data = self.db.inputFeatures.find()[num]
+        return data['keyId'], data['text'], data['featureArr']
+
     def matrixToList(self, weightMatrix):
         weightList = weightMatrix.tolist()
         data = {}
