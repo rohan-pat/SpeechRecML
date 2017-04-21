@@ -1,9 +1,11 @@
 import os
+import re
 import subprocess
+from dbInsert import DBOperation
 import scipy.io.wavfile
 
-path = "/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing/speech-dev"
-
+path = "/Users/Push/Documents/SpeechRecML/preprocessing/speech-dev"
+dbOp = DBOperation()
 print("Start")
 for f in os.listdir(path):
     if f != ".DS_Store":
@@ -29,15 +31,26 @@ for f in os.listdir(path):
                     if f5.endswith("wav"):
                         f6 = f5.replace(".wav","-op1.txt")
                         wFile = scipy.io.wavfile.read(f5)
-                        wav_array = wFile[1][100:110]
-                        print(wav_array)
+                        wav_array = wFile[1]
                         f7 = open(f6,"r")
+                        f8 = f5.replace(".wav","")
+                        pathArr = f8.split('/')
+                        key = pathArr[len(pathArr)-1]
+                        sentArr = []
+                        tempArr = []
                         for line in f7:
                             line = line.strip()
-                            print(line)
-                        # key id.
-                        f8 = f5.replace(".wav","")
-                        print(f8)
+                            lineArr = line.split('-')
+                            word = re.sub('[\"]+', '', lineArr[0])
+                            intervals = lineArr[1].split(',')
+                            start = float(intervals[0])*16000
+                            end = float(intervals[1])*16000
+                            wordArr = wav_array[int(start):int(end)]
+                            sentArr.append(word)
+                            tempArr.append(wordArr.tolist())
+
+                        sent = ' '.join(sentArr)
+                        dbOp.insertRawData(key, sent, tempArr)
                         # print(len(wFile[1]))
             # print("------------")
 print("finished")
