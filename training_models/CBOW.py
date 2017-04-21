@@ -5,6 +5,7 @@ from nltk.stem.porter import PorterStemmer
 import sys
 sys.path.insert(0, '/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing')
 from dbInsert import DBOperation
+import decimal
 
 def activation_function(x):
     # exponential function as activation
@@ -32,6 +33,14 @@ class CBOW:
         self.tj = None
         self.sum_exp = None
         self.uj_output = None
+
+    def calculate_exp(self, uj_output):
+        uj_list = []
+        # print(uj_output.shape)
+        for i in range(self.v):
+            # print(uj_output[0, i])
+            uj_list.append(activation_function(uj_output[0, i]))
+        return np.matrix(uj_list)
 
     def loadText(self):
         with open(self.text, "r") as ftext:
@@ -89,10 +98,12 @@ class CBOW:
                 # print(uj)
                 output_list.append(uj[0, 0])
             self.uj_output = np.around(np.matrix(output_list), decimals=5)
+            # print(self.uj_output.shape)
+            # self.output_layer = self.calculate_exp(self.uj_output)
             self.output_layer = np.exp(self.uj_output)
             self.sum_exp = np.sum(self.output_layer, axis=1)
             # print("Shape of sum_exp = "+str(self.sum_exp.shape))
-            self.yj = self.yj / self.sum_exp
+            self.yj = self.output_layer / self.sum_exp
         #     if total % 500 == 0:
         #         print("Count is "+str(rcount)+" ,"+str(total))
         # print("Total is "+str(total))
@@ -115,6 +126,7 @@ class CBOW:
                 gradient1 = learning_rate * (self.yj[0,i] - self.tj[0,i]) * self.hidden_layer
                 self.w1[:,[i]] = self.w1[:,[i]] - gradient1.transpose()
 
+            gradient = (1 / self.window_size) * learning_rate
             EH = self.yj - self.tj
             EH = np.multiply(EH, self.w1)
             # print(EH.shape)
