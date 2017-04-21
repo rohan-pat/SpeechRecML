@@ -113,26 +113,27 @@ class CBOW:
         rcount = 0
         learning_rate = 0.3
         # print("length of text list is "+str(len(self.text_list)))
-        for i in range(4, len(self.text_list)):
-            text_temp = self.text_list[i-4:i+5]
-            if len(text_temp) != 9:
-                break
-            total = total + 1
-            index = self.text_dict[self.text_list[i]]
-            self.tj[0, index] = 1
+        # for i in range(4, len(self.text_list)):
+        #     text_temp = self.text_list[i-4:i+5]
+        #     if len(text_temp) != 9:
+        #         break
+        # total = total + 1
+        # index = self.text_dict[self.text_list[i]]
 
-            for i in range(self.v):
-                rcount = rcount + 1
-                gradient1 = learning_rate * (self.yj[0,i] - self.tj[0,i]) * self.hidden_layer
-                self.w1[:,[i]] = self.w1[:,[i]] - gradient1.transpose()
+        for i in range(self.v):
+            self.tj = np.zeros((self.yj.shape), dtype=float)
+            self.tj[0,i] = 1
+            rcount = rcount + 1
+            gradient1 = learning_rate * (self.yj[0,i] - self.tj[0,i]) * self.hidden_layer
+            self.w1[:,[i]] = self.w1[:,[i]] - gradient1.transpose()
 
-            gradient = (1 / self.window_size) * learning_rate
-            EH = self.yj - self.tj
-            EH = np.multiply(EH, self.w1)
-            # print(EH.shape)
-            self.w0 = self.w0 - EH.transpose()
-            # if total % 500 == 0:
-            #     print("Count is "+str(rcount)+" ,"+str(total))
+        gradient = (1 / self.window_size) * learning_rate
+        EH = self.yj - self.tj
+        EH = np.multiply(EH, self.w1)
+        # print(EH.shape)
+        self.w0 = self.w0 - EH.transpose()
+        # if total % 500 == 0:
+        #     print("Count is "+str(rcount)+" ,"+str(total))
 
     def calculateError(self):
         total_error = 0.0
