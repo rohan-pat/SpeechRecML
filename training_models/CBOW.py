@@ -6,6 +6,13 @@ import sys
 sys.path.insert(0, '/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing')
 from dbInsert import DBOperation
 
+def activation_function(x):
+    # exponential function as activation
+    # using decimal to better handle floating point underflow.
+    x = decimal.Decimal(-x)
+    z = x.exp()
+    return float(round(decimal.Decimal(1) / decimal.Decimal(1 + z), 8))
+
 class CBOW:
     def __init__(self):
         self.text = "bag-of-words.txt"
@@ -81,11 +88,11 @@ class CBOW:
                 uj = np.dot(self.hidden_layer, self.w1[:,[j]])
                 # print(uj)
                 output_list.append(uj[0, 0])
-            self.uj_output = np.matrix(output_list)
-            self.output_layer = np.exp(np.matrix(output_list))
+            self.uj_output = np.around(np.matrix(output_list), decimals=5)
+            self.output_layer = np.exp(self.uj_output)
             self.sum_exp = np.sum(self.output_layer, axis=1)
-            # print("Shape of sum_exp = "+str(sum_exp.shape))
-            self.yj = self.yj / self.sum_exp[0,0]
+            # print("Shape of sum_exp = "+str(self.sum_exp.shape))
+            self.yj = self.yj / self.sum_exp
         #     if total % 500 == 0:
         #         print("Count is "+str(rcount)+" ,"+str(total))
         # print("Total is "+str(total))
@@ -119,7 +126,7 @@ class CBOW:
         total_error = 0.0
         # print(self.uj_output.shape)
         for i in range(self.v):
-            total_error = total_error - self.uj_output[0,i] - np.log(self.sum_exp[0,0])
+            total_error = total_error - self.uj_output[0,i] - np.log(self.sum_exp)
         print("Total Error is "+str(total_error))
         return total_error
 
