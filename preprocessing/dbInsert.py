@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import json
+import numpy as np
 
 class DBOperation:
     def __init__(self):
@@ -7,13 +8,28 @@ class DBOperation:
         self.db = self.client.test #client['test']
         self.coll = self.db['speechRec'] #db.speechRec
 
-    def insertFeatureData(self, key, word, wavArr, featureArr):
+    def matrixToList(self, weightMatrix):
+        weightList = weightMatrix.tolist()
         data = {}
-        data['word'] = word
+        data['weightList'] = weightList
+        self.db.weights.insert_one(data)
+
+    def listToMatrix(self):
+        data = self.db.weights.find()[0]
+        print(data['weightList'])
+        weightMatrix = np.matrix(data['weightList'])
+        return weightMatrix
+
+    def insertFeatureData(self, key, text, featureList):
+        data = {}
+        words = text.split(" ")
+        featureArr = []
+        for i in range(len(words)):
+            featureArr.append({'word' : words[i], 'features' : featureList[i]})
+
+        data['text'] = text
         data['keyId'] = key
-        data['wavArr'] = wavArr
-        for i in range(len(featureArr)):
-            data['feature'+str(i)] = featureArr[i]
+        data['featureArr'] = featureArr
         self.db.inputFeatures.insert_one(data)
 
     def insertRawData(self, keyId, text, sample):

@@ -7,7 +7,8 @@ import scipy.io.wavfile
 import librosa
 # from scikits.talkbox.features import mfcc
 
-path = "/Users/Rohan/Documents/Studies/Spring2017/ML/ProjectCode/SpeechRecML/preprocessing/speech-dev"
+path = "/Users/Push/Documents/SpeechRecML/preprocessing/speech-dev"
+
 dbOp = DBOperation()
 print("Start")
 for f in os.listdir(path):
@@ -41,6 +42,7 @@ for f in os.listdir(path):
                         key = pathArr[len(pathArr)-1]
                         sentArr = []
                         tempArr = []
+                        cepsArr = []
                         for line in f7:
                             line = line.strip()
                             lineArr = line.split('-')
@@ -49,22 +51,12 @@ for f in os.listdir(path):
                             start = float(intervals[0])*16000
                             end = float(intervals[1])*16000
                             wordArr = wav_array[int(start):int(end)]
-                            print(start)
-                            print(end)
-                            print(len(wordArr))
                             ceps = librosa.feature.mfcc(y=wordArr, sr=16000, hop_length=20480, n_mfcc=13)
-                            print(ceps)
-                            print(ceps.shape)
-                            # ceps, mspec, spec = mfcc(wordArr)
-                            # print(ceps)
-                            # print(ceps.shape)
-                            # print(spec)
-                            # print(spec.shape)
-                            exit(0)
                             sentArr.append(word)
-                            tempArr.append(wordArr.tolist())
-
-                        # sent = ' '.join(sentArr)
+                            cepsArr.append(ceps.tolist())
+                            #tempArr.append(wordArr.tolist())
+                        sent = ' '.join(sentArr)
+                        # dbOp.insertFeatureData(key, sent, cepsArr)
                         # dbOp.insertRawData(key, sent, tempArr)
                         # print(len(wFile[1]))
             # print("------------")
