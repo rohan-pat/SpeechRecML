@@ -20,6 +20,7 @@ class DBOperation:
             featureData = [item for sublist in featureObj['features'] for item in sublist]
             wordData.append(featureObj['word'])
             wordData.append(featureData)
+            wordData.append(featureObj['target'])
             finalData.append(wordData)
         return finalData
 
@@ -33,6 +34,15 @@ class DBOperation:
             wordData.append(featureData)
             finalData.append(wordData)
         return finalData
+
+    def storeWordList(self, wordList):
+        data = {}
+        data['wordList'] = wordList
+        self.db.wordCol.insert_one(data)
+
+    def getWordList(self):
+        data = self.db.wordCol.find({})
+        return data['wordList']
 
     def storeWeightMatrix(self, weightMatrix):
         weightList = weightMatrix.tolist()
@@ -58,12 +68,12 @@ class DBOperation:
         weightMatrix = np.matrix(data['weightList'])
         return weightMatrix
 
-    def insertFeatureData(self, key, text, featureList):
+    def insertFeatureData(self, key, text, featureList, targetList):
         data = {}
         words = text.split(" ")
         featureArr = []
         for i in range(len(words)):
-            featureArr.append({'word' : words[i], 'features' : featureList[i]})
+            featureArr.append({'word' : words[i], 'features' : featureList[i], 'target': targetList})
 
         data['text'] = text
         data['keyId'] = key
