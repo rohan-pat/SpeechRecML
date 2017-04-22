@@ -116,6 +116,32 @@ class DBOperation:
         # print(data)
         self.db.inputData.insert_one(data)
 
+    def storeMatrices(self, wxhMatrix, whhMatrix, whyMatrix, bhMatrix, byMatrix):
+        wxh = wxhMatrix.tolist()
+        whh = whhMatrix.tolist()
+        why = whyMatrix.tolist()
+        bh = bhMatrix.tolist()
+        by = byMatrix.tolist()
+        data = {}
+        data['wxh'] = wxh
+        data['whh'] = whh
+        data['why'] = why
+        data['bh'] = bh
+        data['by'] = by
+        self.db.matrices.remove({})
+        self.db.matrices.insert_one(data)
+
+    def getwxhMatrices(self):
+        data = self.db.matrices.find()[0]
+        wxhMatrix = np.matrix(data['wxh'])
+        whhMatrix = np.matrix(data['whh'])
+        whyMatrix = np.matrix(data['why'])
+        bhMatrix = np.matrix(data['bh'])
+        byMatrix = np.matrix(data['by'])
+        return wxhMatrix, whhMatrix, whyMatrix, bhMatrix, byMatrix
+
+
+
 if __name__ == "__main__":
     sample = [];
     sampleI = [34,16,676]
