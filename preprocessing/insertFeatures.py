@@ -12,10 +12,6 @@ path = "/Users/Push/Documents/SpeechRecML/preprocessing/speech-dev"
 
 dbOp = DBOperation()
 print("Start")
-count = dbOp.getCount()
-wordArray = dbOp.getFeatures(22)
-
-print(wordArray)
 # for f in os.listdir(path):
 #     if f != ".DS_Store":
 #         f1 = os.path.join(path, f)
