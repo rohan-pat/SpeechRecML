@@ -163,7 +163,7 @@ if __name__ == "__main__":
 
         if total_error < abs(c.calculateError()):
             print("Lower error rate found")
-            d.storeWeightMatrix(self.w0)
+            d.storeWeightMatrix(c.w0)
             total_error = abs(c.calculateError())
 
         epoch = epoch + 1
