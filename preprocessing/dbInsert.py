@@ -15,10 +15,21 @@ class DBOperation:
     def getFeatures(self, num):
         data = self.db.inputFeatures.find()[num]
         finalData = []
-        for i in data['featureArr']:
+        for featureObj in data['featureArr']:
             wordData = []
-            featureData = [item for sublist in i['features'] for item in sublist]
-            wordData.append(i['word'])
+            featureData = [item for sublist in featureObj['features'] for item in sublist]
+            wordData.append(featureObj['word'])
+            wordData.append(featureData)
+            finalData.append(wordData)
+        return finalData
+
+    def getFinalFeatures(self, num):
+        data = self.db.finalFeatures.find()[num]
+        finalData = []
+        for featureObj in data['featureArr']:
+            wordData = []
+            featureData = [item for sublist in featureObj['finalFeatures'] for item in sublist]
+            wordData.append(featureObj['word'])
             wordData.append(featureData)
             finalData.append(wordData)
         return finalData
@@ -46,6 +57,29 @@ class DBOperation:
         data['keyId'] = key
         data['featureArr'] = featureArr
         self.db.inputFeatures.insert_one(data)
+
+    def insertFinalFeatures(self, key, text, featureList):
+        data = {}
+        words = text.split(" ")
+        featureArr = []
+        for i in range(len(words)):
+            featureArr.append({'word' : words[i], 'finalFeatures' : featureList[i]})
+        data['text'] = text
+        data['keyId'] = key
+        data['featureArr'] = featureArr
+        self.db.finalFeatures.insert_one(data)
+
+    # def getFinalFeatures(self, num):
+    #     data = self.db.inputFeatures.find()[num]
+    #     finalData = []
+    #     print(data)
+        # for i in data['featureArr']:
+        #     wordData = []
+        #     featureData = [item for sublist in i['features'] for item in sublist]
+        #     wordData.append(i['word'])
+        #     wordData.append(featureData)
+        #     finalData.append(wordData)
+        # return finalData
 
     def insertRawData(self, keyId, text, sample):
         data = {}
