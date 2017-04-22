@@ -161,10 +161,10 @@ if __name__ == "__main__":
         c.backPropogation()
         print("Back Prop => %s seconds" % round((time.time() - b_time), 2))
 
-        if total_error < c.calculateError():
+        if total_error < abs(c.calculateError()):
             print("Lower error rate found")
             d.storeWeightMatrix(self.w0)
-            total_error = c.calculateError()
+            total_error = abs(c.calculateError())
 
         epoch = epoch + 1
     print("Total time => %s seconds" % round((time.time() - total_runtime), 2))
