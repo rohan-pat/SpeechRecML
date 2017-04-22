@@ -128,7 +128,7 @@ class CBOW:
             self.w1[:,[i]] = self.w1[:,[i]] - gradient1.transpose()
 
         gradient = (1 / self.window_size) * learning_rate
-        EH = self.yj - self.tj
+        EH = gradient * (self.yj - self.tj)
         EH = np.multiply(EH, self.w1)
         # print(EH.shape)
         self.w0 = self.w0 - EH.transpose()
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     total_error = 0
     total_runtime = time.time()
     d = DBOperation()
-    while epoch != 100:
+    while epoch != 1000:
         print("---------%s-----------" %(epoch))
         f_time = time.time()
         c.forwardProp()
@@ -164,6 +164,7 @@ if __name__ == "__main__":
         if total_error < c.calculateError():
             print("Lower error rate found")
             d.storeWeightMatrix(self.w0)
+            total_error = c.calculateError()
 
         epoch = epoch + 1
     print("Total time => %s seconds" % round((time.time() - total_runtime), 2))
