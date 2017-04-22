@@ -14,7 +14,14 @@ class DBOperation:
 
     def getFeatures(self, num):
         data = self.db.inputFeatures.find()[num]
-        return data['text'], data['featureArr']
+        finalData = []
+        for i in data['featureArr']:
+            wordData = []
+            featureData = [item for sublist in i['features'] for item in sublist]
+            wordData.append(i['word'])
+            wordData.append(featureData)
+            finalData.append(wordData)
+        return finalData
 
     def storeWeightMatrix(self, weightMatrix):
         weightList = weightMatrix.tolist()
@@ -25,7 +32,6 @@ class DBOperation:
 
     def getWeightMatrix(self):
         data = self.db.weights.find()[0]
-        print(data['weightList'])
         weightMatrix = np.matrix(data['weightList'])
         return weightMatrix
 
