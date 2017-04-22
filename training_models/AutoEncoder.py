@@ -2,6 +2,9 @@ import numpy as np
 import random
 from math import exp
 import decimal
+import sys
+sys.path.insert(0, '/Users/Push/Documents/SpeechRecML/preprocessing')
+from dbInsert import DBOperation
 
 class HiddenNeuron:
     """ Class for hidden neurons. 10 neurons.
@@ -209,8 +212,12 @@ c.rounding = decimal.ROUND_UP
 feature, target = readCSV("input.csv")
 input_list = [1,2]
 
-count = 
-word, wordArray =
+dbOp = DBOperation()
+count = dbOp.getCount()
+text, wordArray = dbOp.getFeatures(12)
+
+print(text)
+print(wordArray)
 
 # creating a list of ten hidden nodes.
 # hlist = []

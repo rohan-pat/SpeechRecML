@@ -14,7 +14,7 @@ class DBOperation:
 
     def getFeatures(self, num):
         data = self.db.inputFeatures.find()[num]
-        return data['keyId'], data['text'], data['featureArr']
+        return data['text'], data['featureArr']
 
     def storeWeightMatrix(self, weightMatrix):
         weightList = weightMatrix.tolist()
