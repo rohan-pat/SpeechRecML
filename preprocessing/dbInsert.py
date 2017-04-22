@@ -41,6 +41,18 @@ class DBOperation:
         self.db.weights.remove({})
         self.db.weights.insert_one(data)
 
+    def storeEncodedMatrix(self, encodedMatrix):
+        encList = encodedMatrix.tolist()
+        data = {}
+        data['encList'] = encList
+        self.db.encMatrix.remove({})
+        self.db.encMatrix.insert_one(data)
+
+    def getEncodedMatrix(self):
+        data = self.db.encMatrix.find()[0]
+        encodedMatrix = np.matrix(data['encList'])
+        return encodedMatrix
+
     def getWeightMatrix(self):
         data = self.db.weights.find()[0]
         weightMatrix = np.matrix(data['weightList'])
